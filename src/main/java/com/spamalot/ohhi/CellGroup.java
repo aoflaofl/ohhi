@@ -50,10 +50,7 @@ class CellGroup {
    *          Color to scan for.
    */
   public void findEmpty(final Cell.Color color) {
-    Cell.Color oppo = Cell.Color.RED;
-    if (color.equals(Cell.Color.RED)) {
-      oppo = Cell.Color.BLUE;
-    }
+    Cell.Color oppo = color.opposite();
 
     for (int i = 0; i < size; i++) {
       if (cells[i].isEmpty()) {
