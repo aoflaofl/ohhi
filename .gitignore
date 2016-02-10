@@ -1,3 +1,6 @@
 /target/
 /doc/
 /.checkstyle
+/.classpath
+/.project
+/.settings/
