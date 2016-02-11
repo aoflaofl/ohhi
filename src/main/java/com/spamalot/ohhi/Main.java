@@ -38,6 +38,8 @@ public final class Main {
     System.out.println(puzzle);
     puzzle.evenNumber();
     System.out.println(puzzle);
+    puzzle.domehtingSeomthing();
+    System.out.println(puzzle);
 
   }
 

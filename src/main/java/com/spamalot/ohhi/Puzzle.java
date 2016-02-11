@@ -1,7 +1,5 @@
 package com.spamalot.ohhi;
 
-import com.spamalot.ohhi.Cell.Color;
-
 /**
  * The Puzzle Class.
  * 
@@ -86,10 +84,8 @@ class Puzzle {
    */
   final void threeInARow() {
     for (int i = 0; i < size; i++) {
-      rows[i].findEmpty(Color.BLUE);
-      rows[i].findEmpty(Color.RED);
-      columns[i].findEmpty(Color.BLUE);
-      columns[i].findEmpty(Color.RED);
+      rows[i].findEmpty();
+      columns[i].findEmpty();
     }
   }
 
@@ -101,5 +97,37 @@ class Puzzle {
       rows[i].evenNumber();
       columns[i].evenNumber();
     }
+  }
+
+  void domehtingSeomthing() {
+    duplicateGroups(rows);
+    duplicateGroups(columns);
+  }
+
+  void duplicateGroups(final CellGroup[] group) {
+    for (int i = 0; i < size; i++) {
+      if (group[i].emptyCount() == 2) {
+        System.out.println("Row " + i + " is missing two cells");
+        CellGroup cg = findDuplicate(group, group[i]);
+        if (cg != null) {
+          System.out.println("  Now we have to fix row " + i);
+          group[i].fixCellGroup(cg);
+        }
+      }
+    }
+  }
+
+  private CellGroup findDuplicate(final CellGroup[] rows2, final CellGroup cellGroup) {
+    CellGroup ret = null;
+    for (int i = 0; i < size; i++) {
+      if (rows2[i].emptyCount() == 0) {
+        if (cellGroup.compareExistingCells(rows2[i])) {
+          System.out.println("  Row " + i + "  matches");
+          return rows2[i];
+        }
+      }
+    }
+
+    return ret;
   }
 }

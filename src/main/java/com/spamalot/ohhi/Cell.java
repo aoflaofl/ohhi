@@ -16,13 +16,28 @@ class Cell {
    */
   enum Color {
     /**
-     * The color Red.
-     */
-    RED("R"),
-    /**
      * The color Blue.
      */
-    BLUE("B");
+    BLUE("B"),
+    /**
+     * The color Red.
+     */
+    RED("R");
+
+    /**
+     * What this color looks like when printed.
+     */
+    private String stringVal;
+
+    /**
+     * Color enum constructor.
+     * 
+     * @param val
+     *          String representation for this Color.
+     */
+    Color(final String val) {
+      stringVal = val;
+    }
 
     /**
      * Get the opposite color.
@@ -40,24 +55,9 @@ class Cell {
       }
     }
 
-    /**
-     * What this color looks like when printed.
-     */
-    private String rep;
-
-    /**
-     * Color enum constructor.
-     * 
-     * @param rep
-     *          String representation for this Color.
-     */
-    Color(final String rep) {
-      this.rep = rep;
-    }
-
     @Override
     public String toString() {
-      return rep;
+      return stringVal;
     }
   }
 
@@ -66,8 +66,29 @@ class Cell {
    */
   private Color color;
 
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    Cell other = (Cell) obj;
+    if (other.color == null) {
+      return false;
+    }
+    if (color != other.color) {
+      return false;
+    }
+    return true;
+  }
+
   /**
-   * Get the cell's color.
+   * Get this cell's color.
    * 
    * @return the Cell's color
    */
@@ -75,11 +96,28 @@ class Cell {
     return color;
   }
 
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((color == null) ? 0 : color.hashCode());
+    return result;
+  }
+
+  /**
+   * Check if a cell is empty.
+   * 
+   * @return True if this cell has no color
+   */
+  public boolean isEmpty() {
+    return color == null;
+  }
+
   /**
    * Set the cell's color.
    * 
    * @param color
-   *          the color to set it to.
+   *          the color to set the cell to
    */
   public final void setColor(final Color color) {
     this.color = color;
@@ -87,24 +125,10 @@ class Cell {
 
   @Override
   public String toString() {
-    String ret = ".";
-    if (this.color == Color.RED) {
-      ret = "R";
+    if (color != null) {
+      return color.toString();
     }
-    if (this.color == Color.BLUE) {
-      ret = "B";
-    }
-    return ret;
-  }
-
-  /**
-   * Check if a cell is empty.
-   * 
-   * @return True if this cell has no color.
-   */
-  public boolean isEmpty() {
-
-    return color == null;
+    return ".";
   }
 
 }
