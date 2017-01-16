@@ -2,6 +2,8 @@ package com.spamalot.ohhi;
 
 import com.spamalot.ohhi.Cell.Color;
 
+import java.util.Arrays;
+
 /**
  * Hold a collection of Cells and do operations on them.
  * 
@@ -47,13 +49,13 @@ class CellGroup {
    * Handle rule of no three in a row.
    * 
    */
-  public void findEmpty() {
-    for (int i = 0; i < size - 3; i++) {
-      threeCells(cells[i], cells[i + 1], cells[i + 2]);
-      threeCells(cells[i + 1], cells[i], cells[i + 2]);
-      threeCells(cells[i + 2], cells[i + 1], cells[i]);
-    }
-  }
+//  public void findEmpty() {
+//    for (int i = 0; i < size - 3; i++) {
+//      threeCells(cells[i], cells[i + 1], cells[i + 2]);
+//      threeCells(cells[i + 1], cells[i], cells[i + 2]);
+//      threeCells(cells[i + 2], cells[i + 1], cells[i]);
+//    }
+//  }
 
   /**
    * Handle three cells in a row such that two are filled and they all three
@@ -66,13 +68,13 @@ class CellGroup {
    * @param cell3
    *          Second cell to check
    */
-  private static void threeCells(final Cell cell1, final Cell cell2, final Cell cell3) {
-    if (cell1.isEmpty()) {
-      if (cell2.equals(cell3)) {
-        cell1.setColor(cell2.getColor().opposite());
-      }
-    }
-  }
+//  private static void threeCells(final Cell cell1, final Cell cell2, final Cell cell3) {
+//    if (cell1.isEmpty()) {
+//      if (cell2.equals(cell3)) {
+//        cell1.setColor(cell2.getColor().opposite());
+//      }
+//    }
+//  }
 
   /**
    * Handle Rule that the number of Red and Blue cells must be the same.
@@ -182,4 +184,21 @@ class CellGroup {
 
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return "CellGroup [size=" + size + ", cells=" + Arrays.toString(cells) + "]";
+  }
+
+  public int getSize() {
+    return size;
+  }
+
+  public Cell getCell(final int i) {
+    return cells[i];
+  }
 }

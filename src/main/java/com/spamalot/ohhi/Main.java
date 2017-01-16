@@ -21,26 +21,14 @@ public final class Main {
    *          Arguments to the program
    */
   public static void main(final String[] args) {
-    PuzzleBoard puzzle = new PuzzleBoard(4);
+    PuzzleBoard puzzleBoard = new PuzzleBoard(4);
 
-    puzzle.setCell(Cell.Color.RED, 0, 2);
-    puzzle.setCell(Cell.Color.BLUE, 1, 3);
-    puzzle.setCell(Cell.Color.BLUE, 2, 0);
-    puzzle.setCell(Cell.Color.RED, 3, 0);
-    puzzle.setCell(Cell.Color.RED, 3, 1);
+    puzzleBoard.setCell(Cell.Color.RED, 0, 2);
+    puzzleBoard.setCell(Cell.Color.BLUE, 1, 3);
+    puzzleBoard.setCell(Cell.Color.BLUE, 2, 0);
+    puzzleBoard.setCell(Cell.Color.RED, 3, 0);
+    puzzleBoard.setCell(Cell.Color.RED, 3, 1);
 
-    System.out.println(puzzle);
-    puzzle.threeInARow();
-    System.out.println(puzzle);
-    puzzle.evenNumber();
-    System.out.println(puzzle);
-    puzzle.threeInARow();
-    System.out.println(puzzle);
-    puzzle.evenNumber();
-    System.out.println(puzzle);
-    puzzle.domehtingSeomthing();
-    System.out.println(puzzle);
-
+    PuzzleSolver.solve(puzzleBoard);
   }
-
 }

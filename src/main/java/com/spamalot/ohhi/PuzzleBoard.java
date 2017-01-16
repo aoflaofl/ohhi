@@ -84,12 +84,12 @@ class PuzzleBoard {
   /**
    * Handle Case of three in a row.
    */
-  final void threeInARow() {
-    for (int i = 0; i < size; i++) {
-      rows[i].findEmpty();
-      columns[i].findEmpty();
-    }
-  }
+//  final void threeInARow() {
+//    for (int i = 0; i < size; i++) {
+//      rows[i].findEmpty();
+//      columns[i].findEmpty();
+//    }
+//  }
 
   /**
    * Handle case where number of Red and Blue cells must be the same.
@@ -131,5 +131,13 @@ class PuzzleBoard {
     }
 
     return ret;
+  }
+
+  public CellGroup[] getRowCellGroups() {
+    return rows;
+  }
+
+  public CellGroup[] getColumnCellGroups() {
+    return columns;
   }
 }
