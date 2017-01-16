@@ -6,15 +6,17 @@ package com.spamalot.ohhi;
  * @author johannsg
  *
  */
-class Puzzle {
+class PuzzleBoard {
   /**
    * Hold the Cells.
    */
   private Cell[][] cells;
+
   /**
    * The rows CellGroups.
    */
   private CellGroup[] rows;
+
   /**
    * The Columns Cell Groups.
    */
@@ -31,7 +33,7 @@ class Puzzle {
    * @param size
    *          The size of the Puzzle.
    */
-  Puzzle(final int size) {
+  PuzzleBoard(final int size) {
     this.size = size;
     cells = new Cell[size][size];
     rows = new CellGroup[size];

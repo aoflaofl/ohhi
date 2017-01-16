@@ -21,7 +21,7 @@ public final class Main {
    *          Arguments to the program
    */
   public static void main(final String[] args) {
-    Puzzle puzzle = new Puzzle(4);
+    PuzzleBoard puzzle = new PuzzleBoard(4);
 
     puzzle.setCell(Cell.Color.RED, 0, 2);
     puzzle.setCell(Cell.Color.BLUE, 1, 3);
