@@ -104,7 +104,7 @@ class Puzzle {
     duplicateGroups(columns);
   }
 
-  void duplicateGroups(final CellGroup[] group) {
+  private void duplicateGroups(final CellGroup[] group) {
     for (int i = 0; i < size; i++) {
       if (group[i].emptyCount() == 2) {
         System.out.println("Row " + i + " is missing two cells");
