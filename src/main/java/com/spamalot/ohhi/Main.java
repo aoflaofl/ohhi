@@ -8,27 +8,38 @@ package com.spamalot.ohhi;
  */
 public final class Main {
 
-  /**
-   * Instantiate nothing.
-   */
-  private Main() {
-  }
+	/**
+	 * Instantiate nothing.
+	 */
+	private Main() {
+	}
 
-  /**
-   * Really, start here.
-   * 
-   * @param args
-   *          Arguments to the program
-   */
-  public static void main(final String[] args) {
-    PuzzleBoard puzzleBoard = new PuzzleBoard(4);
+	/**
+	 * Really, start here.
+	 * 
+	 * @param args
+	 *            Arguments to the program
+	 */
+	public static void main(final String[] args) {
+		PuzzleBoard puzzleBoard = new PuzzleBoard(8);
 
-    puzzleBoard.setCell(Cell.Color.RED, 0, 2);
-    puzzleBoard.setCell(Cell.Color.BLUE, 1, 3);
-    puzzleBoard.setCell(Cell.Color.BLUE, 2, 0);
-    puzzleBoard.setCell(Cell.Color.RED, 3, 0);
-    puzzleBoard.setCell(Cell.Color.RED, 3, 1);
+		puzzleBoard.setCell(Cell.Color.RED, 0, 0);
+		puzzleBoard.setCell(Cell.Color.RED, 0, 5);
+		puzzleBoard.setCell(Cell.Color.RED, 1, 7);
+		puzzleBoard.setCell(Cell.Color.RED, 2, 0);
+		puzzleBoard.setCell(Cell.Color.BLUE, 2, 3);
+		puzzleBoard.setCell(Cell.Color.RED, 3, 2);
+		puzzleBoard.setCell(Cell.Color.RED, 3, 4);
+		puzzleBoard.setCell(Cell.Color.RED, 3, 7);
+		puzzleBoard.setCell(Cell.Color.RED, 5, 0);
+		puzzleBoard.setCell(Cell.Color.RED, 5, 3);
+		puzzleBoard.setCell(Cell.Color.RED, 5, 5);
+		puzzleBoard.setCell(Cell.Color.RED, 5, 7);
+		puzzleBoard.setCell(Cell.Color.RED, 6, 5);
+		puzzleBoard.setCell(Cell.Color.RED, 6, 7);
+		puzzleBoard.setCell(Cell.Color.RED, 7, 0);
+		puzzleBoard.setCell(Cell.Color.RED, 7, 2);
 
-    PuzzleSolver.solve(puzzleBoard);
-  }
+		PuzzleSolver.solve(puzzleBoard);
+	}
 }
