@@ -1,55 +1,50 @@
 package com.spamalot.ohhi;
 
+import javax.annotation.Nullable;
+
 /**
- * The Puzzle Class.
+ * The PuzzleBoard Class. Hold contents of the Puzzle squares.
  * 
  * @author johannsg
  *
  */
 class PuzzleBoard {
-  /**
-   * Hold the Cells.
-   */
+  /** Hold the Cells. */
   private Cell[][] cells;
 
-  /**
-   * The rows CellGroups.
-   */
+  /** The rows CellGroups. */
   private CellGroup[] rows;
 
-  /**
-   * The Columns Cell Groups.
-   */
+  /** The Columns Cell Groups. */
   private CellGroup[] columns;
 
-  /**
-   * Size of the puzzle.
-   */
+  // TODO: Puzzles don't have to be square. Allow rectangles.
+  /** Size of the puzzle. */
   private int size;
 
   /**
    * Instantiate a Puzzle.
    * 
-   * @param size
+   * @param s
    *          The size of the Puzzle.
    */
-  PuzzleBoard(final int size) {
-    this.size = size;
-    cells = new Cell[size][size];
-    rows = new CellGroup[size];
-    columns = new CellGroup[size];
+  PuzzleBoard(final int s) {
+    this.size = s;
+    this.cells = new Cell[s][s];
+    this.rows = new CellGroup[s];
+    this.columns = new CellGroup[s];
 
-    for (int i = 0; i < size; i++) {
-      rows[i] = new CellGroup(size);
-      columns[i] = new CellGroup(size);
+    for (int i = 0; i < s; i++) {
+      this.rows[i] = new CellGroup(s);
+      this.columns[i] = new CellGroup(s);
     }
 
-    for (int row = 0; row < size; row++) {
-      for (int column = 0; column < size; column++) {
+    for (int row = 0; row < s; row++) {
+      for (int column = 0; column < s; column++) {
         Cell cell = new Cell();
-        cells[row][column] = cell;
-        rows[row].addCell(cell, column);
-        columns[column].addCell(cell, row);
+        this.cells[row][column] = cell;
+        this.rows[row].addCell(cell, column);
+        this.columns[column].addCell(cell, row);
       }
     }
   }
@@ -64,50 +59,30 @@ class PuzzleBoard {
    * @param col
    *          Column the cell is in
    */
-  final void setCell(final Cell.Color color, final int row, final int col) {
-    cells[row][col].setColor(color);
+  final void setCell(final CellValue color, final int row, final int col) {
+    this.cells[row][col].setColor(color);
   }
 
   @Override
   public final String toString() {
-    StringBuffer ret = new StringBuffer();
+    StringBuilder ret = new StringBuilder();
 
-    for (int row = 0; row < size; row++) {
-      for (int column = 0; column < size; column++) {
-        ret.append(cells[row][column]);
+    for (int row = 0; row < this.size; row++) {
+      for (int column = 0; column < this.size; column++) {
+        ret.append(this.cells[row][column]);
       }
-      ret.append("\n");
+      ret.append('\n');
     }
     return ret.toString();
   }
 
-  /**
-   * Handle Case of three in a row.
-   */
-//  final void threeInARow() {
-//    for (int i = 0; i < size; i++) {
-//      rows[i].findEmpty();
-//      columns[i].findEmpty();
-//    }
-//  }
-
-  /**
-   * Handle case where number of Red and Blue cells must be the same.
-   */
-  final void evenNumber() {
-    for (int i = 0; i < size; i++) {
-      rows[i].evenNumber();
-      columns[i].evenNumber();
-    }
-  }
-
   void domehtingSeomthing() {
-    duplicateGroups(rows);
-    duplicateGroups(columns);
+    duplicateGroups(this.rows);
+    duplicateGroups(this.columns);
   }
 
   private void duplicateGroups(final CellGroup[] group) {
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < this.size; i++) {
       if (group[i].emptyCount() == 2) {
         System.out.println("Row " + i + " is missing two cells");
         CellGroup cg = findDuplicate(group, group[i]);
@@ -119,9 +94,10 @@ class PuzzleBoard {
     }
   }
 
+  @Nullable
   private CellGroup findDuplicate(final CellGroup[] rows2, final CellGroup cellGroup) {
     CellGroup ret = null;
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < this.size; i++) {
       if (rows2[i].emptyCount() == 0) {
         if (cellGroup.compareExistingCells(rows2[i])) {
           System.out.println("  Row " + i + "  matches");
@@ -134,10 +110,17 @@ class PuzzleBoard {
   }
 
   public CellGroup[] getRowCellGroups() {
-    return rows;
+    return this.rows;
   }
 
   public CellGroup[] getColumnCellGroups() {
-    return columns;
+    return this.columns;
+  }
+
+  /**
+   * @return the size
+   */
+  public int getSize() {
+    return this.size;
   }
 }

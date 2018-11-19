@@ -1,25 +1,21 @@
 package com.spamalot.ohhi;
 
-import com.spamalot.ohhi.Cell.Color;
-
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
- * Hold a collection of Cells and do operations on them.
+ * Hold a collection of Cells and do operations on them. A CellGroup represents
+ * a row or column of cells, in order.
  * 
  * @author johannsg
  *
  */
 class CellGroup {
-  /**
-   * The number of Cells.
-   */
-  private int size;
-
-  /**
-   * The cells in this group.
-   */
+  /** The cells in this group. */
   private Cell[] cells;
+
+  /** The number of Cells in the Group. */
+  private int size;
 
   /**
    * Instantiate a cell group.
@@ -28,9 +24,9 @@ class CellGroup {
    *          How big this cell group is.
    */
   CellGroup(final int groupSize) {
-    size = groupSize;
+    this.size = groupSize;
 
-    cells = new Cell[size];
+    this.cells = new Cell[this.size];
   }
 
   /**
@@ -41,105 +37,9 @@ class CellGroup {
    * @param idx
    *          Where to add it
    */
+  @Deprecated
   public final void addCell(final Cell cell, final int idx) {
-    cells[idx] = cell;
-  }
-
-  /**
-   * Handle rule of no three in a row.
-   * 
-   */
-//  public void findEmpty() {
-//    for (int i = 0; i < size - 3; i++) {
-//      threeCells(cells[i], cells[i + 1], cells[i + 2]);
-//      threeCells(cells[i + 1], cells[i], cells[i + 2]);
-//      threeCells(cells[i + 2], cells[i + 1], cells[i]);
-//    }
-//  }
-
-  /**
-   * Handle three cells in a row such that two are filled and they all three
-   * can't be the same color.
-   * 
-   * @param cell1
-   *          If empty, figure out if its color can be determined
-   * @param cell2
-   *          First cell to check
-   * @param cell3
-   *          Second cell to check
-   */
-//  private static void threeCells(final Cell cell1, final Cell cell2, final Cell cell3) {
-//    if (cell1.isEmpty()) {
-//      if (cell2.equals(cell3)) {
-//        cell1.setColor(cell2.getColor().opposite());
-//      }
-//    }
-//  }
-
-  /**
-   * Handle Rule that the number of Red and Blue cells must be the same.
-   */
-  public void evenNumber() {
-    int redCnt = countColor(Color.RED);
-    int blueCnt = countColor(Color.BLUE);
-
-    if (redCnt == size / 2) {
-      fillEmptyWith(Cell.Color.BLUE);
-    }
-
-    if (blueCnt == size / 2) {
-      fillEmptyWith(Cell.Color.RED);
-    }
-  }
-
-  /**
-   * Count color.
-   * 
-   * @param clr
-   *          color to count
-   * @return the number of cells with that color in this group
-   */
-  private int countColor(final Color clr) {
-    int cnt = 0;
-
-    for (int i = 0; i < size; i++) {
-      if (cells[i].getColor() == clr) {
-        cnt++;
-      }
-    }
-    return cnt;
-  }
-
-  /**
-   * Fill empty cells with a certain color.
-   * 
-   * @param color
-   *          Color to fill empty cells with
-   */
-  private void fillEmptyWith(final Color color) {
-    for (int i = 0; i < size; i++) {
-      if (cells[i].isEmpty()) {
-        cells[i].setColor(color);
-      }
-    }
-
-  }
-
-  /**
-   * Count the empty cells.
-   * 
-   * @return the count of empty cells
-   */
-  public int emptyCount() {
-    int cnt = 0;
-
-    for (int i = 0; i < size; i++) {
-      if (cells[i].isEmpty()) {
-        cnt++;
-      }
-    }
-    return cnt;
-
+    this.cells[idx] = cell;
   }
 
   /**
@@ -151,9 +51,9 @@ class CellGroup {
    * @return true if they match
    */
   public boolean compareExistingCells(final CellGroup cellGroup) {
-    for (int i = 0; i < size; i++) {
-      if (!cells[i].isEmpty()) {
-        if (!cells[i].equals(cellGroup.cells[i])) {
+    for (int i = 0; i < this.size; i++) {
+      if (!this.cells[i].isEmpty()) {
+        if (!this.cells[i].equals(cellGroup.cells[i])) {
           return false;
         }
       }
@@ -163,25 +63,103 @@ class CellGroup {
   }
 
   /**
+   * Count the empty cells.
+   * 
+   * @return the count of empty cells
+   */
+  public int emptyCount() {
+    int cnt = 0;
+
+    for (int i = 0; i < this.size; i++) {
+      if (this.cells[i].isEmpty()) {
+        cnt++;
+      }
+    }
+    return cnt;
+
+  }
+
+  /**
+   * Fill empty cells with a certain color.
+   * 
+   * @param color
+   *          Color to fill empty cells with
+   */
+  void fillEmptyWith(final CellValue color) {
+    for (int i = 0; i < this.size; i++) {
+      if (this.cells[i].isEmpty()) {
+        this.cells[i].setColor(color);
+      }
+    }
+
+  }
+
+  /**
    * Use a full cell group to fix this.
    * 
    * @param cellGroup
    *          CellGroup to use to fix
    */
   public void fixCellGroup(final CellGroup cellGroup) {
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < this.size; i++) {
       System.out.print("     Checking cell " + i + " ... ");
 
-      if (cells[i].isEmpty()) {
+      if (this.cells[i].isEmpty()) {
 
-        cells[i].setColor(cellGroup.cells[i].getColor().opposite());
+        this.cells[i].setColor(cellGroup.cells[i].getCellValue().opposite());
 
       } else {
         System.out.println("Cell " + i + " is good");
       }
+    }
+  }
 
+  /**
+   * Get a cell.
+   * 
+   * @param i
+   *          index of Cell to return
+   * @return the Cell.
+   */
+  public Cell getCell(final int i) {
+    return this.cells[i];
+  }
+
+  /**
+   * Count the values in the cell group.
+   * 
+   * @return a Map of Cell Values to their count.
+   */
+  HashMap<CellValue, Integer> getCountMap() {
+    HashMap<CellValue, Integer> m = new HashMap<>();
+
+    for (int i = 0; i < this.size; i++) {
+
+      CellValue c = this.cells[i].getCellValue();
+
+      if (c == null) {
+        continue;
+      }
+
+      if (m.get(c) == null) {
+        m.put(c, Integer.valueOf(1));
+        continue;
+      }
+
+      int p = m.get(c).intValue();
+      m.put(c, Integer.valueOf(p + 1));
     }
 
+    return m;
+  }
+
+  /**
+   * Get the size of the Group.
+   * 
+   * @return the number of Cells in the Group.
+   */
+  public int getSize() {
+    return this.size;
   }
 
   /*
@@ -191,14 +169,45 @@ class CellGroup {
    */
   @Override
   public String toString() {
-    return "CellGroup [size=" + size + ", cells=" + Arrays.toString(cells) + "]";
+    return "CellGroup [size=" + this.size + ", cells=" + Arrays.toString(this.cells) + "]";
   }
 
-  public int getSize() {
-    return size;
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + Arrays.hashCode(this.cells);
+    return prime * result + this.size;
   }
 
-  public Cell getCell(final int i) {
-    return cells[i];
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    CellGroup other = (CellGroup) obj;
+    if (!Arrays.equals(this.cells, other.cells)) {
+      return false;
+    }
+    if (this.size != other.size) {
+      return false;
+    }
+    return true;
   }
 }

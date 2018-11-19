@@ -8,63 +8,8 @@ package com.spamalot.ohhi;
  */
 class Cell {
 
-  /**
-   * Possible Cell colors.
-   * 
-   * @author johannsg
-   *
-   */
-  enum Color {
-    /**
-     * The color Blue.
-     */
-    BLUE("B"),
-    /**
-     * The color Red.
-     */
-    RED("R");
-
-    /**
-     * What this color looks like when printed.
-     */
-    private String stringVal;
-
-    /**
-     * Color enum constructor.
-     * 
-     * @param val
-     *          String representation for this Color.
-     */
-    Color(final String val) {
-      stringVal = val;
-    }
-
-    /**
-     * Get the opposite color.
-     * 
-     * @return the opposite color
-     */
-    public Color opposite() {
-      switch (this) {
-        case RED:
-          return Color.BLUE;
-        case BLUE:
-          return Color.RED;
-        default:
-          throw new IllegalStateException("This should never happen: " + this + " has no opposite.");
-      }
-    }
-
-    @Override
-    public String toString() {
-      return stringVal;
-    }
-  }
-
-  /**
-   * The color in this cell.
-   */
-  private Color color;
+  /** The value in this cell. */
+  private CellValue value;
 
   @Override
   public boolean equals(final Object obj) {
@@ -78,30 +23,29 @@ class Cell {
       return false;
     }
     Cell other = (Cell) obj;
-    if (other.color == null) {
+    if (other.value == null) {
       return false;
     }
-    if (color != other.color) {
+    if (this.value != other.value) {
       return false;
     }
     return true;
   }
 
   /**
-   * Get this cell's color.
+   * Get this cell's value.
    * 
-   * @return the Cell's color
+   * @return the Cell's value.
    */
-  public final Color getColor() {
-    return color;
+  public final CellValue getCellValue() {
+    return this.value;
   }
 
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((color == null) ? 0 : color.hashCode());
-    return result;
+    return prime * result + ((this.value == null) ? 0 : this.value.hashCode());
   }
 
   /**
@@ -110,23 +54,23 @@ class Cell {
    * @return True if this cell has no color
    */
   public boolean isEmpty() {
-    return color == null;
+    return this.value == null;
   }
 
   /**
    * Set the cell's color.
    * 
-   * @param color
+   * @param c
    *          the color to set the cell to
    */
-  public final void setColor(final Color color) {
-    this.color = color;
+  public final void setColor(final CellValue c) {
+    this.value = c;
   }
 
   @Override
   public String toString() {
-    if (color != null) {
-      return color.toString();
+    if (this.value != null) {
+      return this.value.toString();
     }
     return ".";
   }

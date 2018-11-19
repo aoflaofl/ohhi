@@ -1,12 +1,22 @@
 package com.spamalot.ohhi;
 
+import java.util.HashMap;
+import java.util.Map.Entry;
+
 /**
  * Handle the logic for solving an Ohhi puzzle.
  * 
  * @author gej
  *
  */
-class PuzzleSolver {
+final class PuzzleSolver {
+
+  /**
+   * Do not instantiate this.
+   */
+  private PuzzleSolver() {
+  }
+
   public static void solve(final PuzzleBoard puzzleBoard) {
 
     System.out.println("Rows:");
@@ -32,7 +42,9 @@ class PuzzleSolver {
     System.out.println(puzzleBoard);
     // puzzleBoard.threeInARow();
     // System.out.println(puzzleBoard);
-    puzzleBoard.evenNumber();
+    while (evenNumber(puzzleBoard)) {
+      System.out.println("Made change using even strategy.  Making another pass.");
+    }
 
     System.out.println(puzzleBoard);
     System.out.println("Rows before 3 processing:");
@@ -40,6 +52,7 @@ class PuzzleSolver {
       System.out.println(cg);
     }
     while (solveThree(rows) || solveThree(columns)) {
+      // Just keep doing it.
     }
     System.out.println("Rows after 3 processing:");
     for (CellGroup cg : rows) {
@@ -47,7 +60,7 @@ class PuzzleSolver {
     }
     // puzzleBoard.threeInARow();
     System.out.println(puzzleBoard);
-    puzzleBoard.evenNumber();
+    evenNumber(puzzleBoard);
     System.out.println(puzzleBoard);
     puzzleBoard.domehtingSeomthing();
     System.out.println(puzzleBoard);
@@ -85,23 +98,65 @@ class PuzzleSolver {
   private static boolean fixThreeInARow(final Cell c1, final Cell c2, final Cell c3) {
     if (c1.isEmpty()) {
       if (c2.equals(c3)) {
-        c1.setColor(c2.getColor().opposite());
+        c1.setColor(c2.getCellValue().opposite());
         return true;
       }
     }
     if (c2.isEmpty()) {
       if (c1.equals(c3)) {
-        c2.setColor(c1.getColor().opposite());
+        c2.setColor(c1.getCellValue().opposite());
         return true;
       }
     }
     if (c3.isEmpty()) {
       if (c1.equals(c2)) {
-        c3.setColor(c1.getColor().opposite());
+        c3.setColor(c1.getCellValue().opposite());
         return true;
       }
     }
     return false;
   }
 
+  /**
+   * Handle Rule that the number of Red and Blue cells must be the same.
+   * 
+   * @param cg
+   */
+  private static boolean evenNumber(final CellGroup cg) {
+    // TODO: Need to handle odd size groups.
+    int fillSize = cg.getSize() / 2;
+
+    HashMap<CellValue, Integer> m = cg.getCountMap();
+    System.out.println(m);
+
+    Integer[] x1 = m.values().toArray(new Integer[0]);
+    if (x1.length == 2 && x1[0].intValue() + x1[1].intValue() == cg.getSize()) {
+      // No change was made.
+      return false;
+    }
+
+    for (Entry<CellValue, Integer> x : m.entrySet()) {
+      int qqq = x.getValue().intValue();
+      if (qqq == fillSize) {
+        System.out.println("Need to fill in empties with: " + x.getKey().opposite());
+        cg.fillEmptyWith(x.getKey().opposite());
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Handle case where number of Red and Blue cells must be the same.
+   */
+  private static boolean evenNumber(final PuzzleBoard p) {
+    boolean changed = false;
+    for (int i = 0; i < p.getSize(); i++) {
+      changed = PuzzleSolver.evenNumber(p.getRowCellGroups()[i]) || changed;
+      changed = PuzzleSolver.evenNumber(p.getColumnCellGroups()[i]) || changed;
+      // this.rows[i].evenNumber();
+      // this.columns[i].evenNumber();
+    }
+    return changed;
+  }
 }
