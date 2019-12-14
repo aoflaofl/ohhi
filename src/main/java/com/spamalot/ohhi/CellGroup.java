@@ -37,7 +37,6 @@ class CellGroup {
    * @param idx
    *          Where to add it
    */
-  @Deprecated
   public final void addCell(final Cell cell, final int idx) {
     this.cells[idx] = cell;
   }
@@ -53,7 +52,7 @@ class CellGroup {
   public boolean compareExistingCells(final CellGroup cellGroup) {
     for (int i = 0; i < this.size; i++) {
       if (!this.cells[i].isEmpty()) {
-        if (!this.cells[i].equals(cellGroup.cells[i])) {
+        if (!this.cells[i].hasSameColorAs(cellGroup.cells[i])) {
           return false;
         }
       }
@@ -88,7 +87,7 @@ class CellGroup {
   void fillEmptyWith(final CellValue color) {
     for (int i = 0; i < this.size; i++) {
       if (this.cells[i].isEmpty()) {
-        this.cells[i].setColor(color);
+        this.cells[i].setCellValue(color);
       }
     }
 
@@ -106,7 +105,7 @@ class CellGroup {
 
       if (this.cells[i].isEmpty()) {
 
-        this.cells[i].setColor(cellGroup.cells[i].getCellValue().opposite());
+        this.cells[i].setCellValue(cellGroup.cells[i].getCellValue().opposite());
 
       } else {
         System.out.println("Cell " + i + " is good");

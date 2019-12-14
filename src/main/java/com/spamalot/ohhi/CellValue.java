@@ -7,14 +7,12 @@ package com.spamalot.ohhi;
  *
  */
 enum CellValue {
-  /**
-   * The color Blue.
-   */
+  /** The color Blue. */
   BLUE("B"),
-  /**
-   * The color Red.
-   */
-  RED("R");
+  /** The color Red. */
+  RED("R"),
+  /** The no color color. */
+  EMPTY(".");
 
   /**
    * What this color looks like when printed.
@@ -24,8 +22,7 @@ enum CellValue {
   /**
    * Color enum constructor.
    * 
-   * @param val
-   *          String representation for this Color.
+   * @param val String representation for this Color.
    */
   CellValue(final String val) {
     this.stringVal = val;
@@ -36,19 +33,13 @@ enum CellValue {
    * 
    * @return the opposite color
    * 
-   * @deprecated
+   * 
    */
-  @Deprecated
   public CellValue opposite() {
-    // TODO: Do this another way so can generalize this Enum.
-    switch (this) {
-      case RED:
-        return CellValue.BLUE;
-      case BLUE:
-        return CellValue.RED;
-      default:
-        throw new IllegalStateException("This should never happen: " + this + " has no opposite.");
+    if (this == RED) {
+      return CellValue.BLUE;
     }
+    return CellValue.RED;
   }
 
   @Override

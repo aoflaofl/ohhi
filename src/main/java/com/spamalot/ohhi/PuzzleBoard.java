@@ -60,7 +60,7 @@ class PuzzleBoard {
    *          Column the cell is in
    */
   final void setCell(final CellValue color, final int row, final int col) {
-    this.cells[row][col].setColor(color);
+    this.cells[row][col].setCellValue(color);
   }
 
   @Override

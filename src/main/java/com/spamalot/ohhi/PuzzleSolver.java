@@ -97,20 +97,20 @@ final class PuzzleSolver {
 
   private static boolean fixThreeInARow(final Cell c1, final Cell c2, final Cell c3) {
     if (c1.isEmpty()) {
-      if (c2.equals(c3)) {
-        c1.setColor(c2.getCellValue().opposite());
+      if (c2.hasSameColorAs(c3)) {
+        c1.setCellValue(c2.getCellValue().opposite());
         return true;
       }
     }
     if (c2.isEmpty()) {
-      if (c1.equals(c3)) {
-        c2.setColor(c1.getCellValue().opposite());
+      if (c1.hasSameColorAs(c3)) {
+        c2.setCellValue(c1.getCellValue().opposite());
         return true;
       }
     }
     if (c3.isEmpty()) {
-      if (c1.equals(c2)) {
-        c3.setColor(c1.getCellValue().opposite());
+      if (c1.hasSameColorAs(c2)) {
+        c3.setCellValue(c1.getCellValue().opposite());
         return true;
       }
     }
