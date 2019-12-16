@@ -40,13 +40,10 @@ class Cell {
 
   @Override
   public String toString() {
-    if (this.value != null) {
-      return this.value.toString();
-    }
-    return ".";
+    return this.value.toString();
   }
 
   public boolean hasSameColorAs(Cell cell) {
-    return this.value.equals(cell.getCellValue());
+    return this.value == cell.getCellValue();
   }
 }

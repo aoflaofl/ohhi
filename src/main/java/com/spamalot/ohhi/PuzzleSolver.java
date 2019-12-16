@@ -68,7 +68,9 @@ final class PuzzleSolver {
   }
 
   /**
-   * @param group
+   * Solve a three cell group.
+   * 
+   * @param group The group
    * @return
    */
   private static boolean solveThree(final CellGroup[] group) {
@@ -120,7 +122,7 @@ final class PuzzleSolver {
   /**
    * Handle Rule that the number of Red and Blue cells must be the same.
    * 
-   * @param cg
+   * @param cg The group
    */
   private static boolean evenNumber(final CellGroup cg) {
     // TODO: Need to handle odd size groups.

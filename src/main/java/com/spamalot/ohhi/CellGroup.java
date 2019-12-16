@@ -20,8 +20,7 @@ class CellGroup {
   /**
    * Instantiate a cell group.
    * 
-   * @param groupSize
-   *          How big this cell group is.
+   * @param groupSize How big this cell group is.
    */
   CellGroup(final int groupSize) {
     this.size = groupSize;
@@ -32,10 +31,8 @@ class CellGroup {
   /**
    * Add a cell to the group.
    * 
-   * @param cell
-   *          The cell to add
-   * @param idx
-   *          Where to add it
+   * @param cell The cell to add
+   * @param idx  Where to add it
    */
   public final void addCell(final Cell cell, final int idx) {
     this.cells[idx] = cell;
@@ -45,8 +42,7 @@ class CellGroup {
    * Compare this CellGroup to another one, ignoring the empty cells in this
    * group.
    * 
-   * @param cellGroup
-   *          Group to compare to.
+   * @param cellGroup Group to compare to.
    * @return true if they match
    */
   public boolean compareExistingCells(final CellGroup cellGroup) {
@@ -75,14 +71,12 @@ class CellGroup {
       }
     }
     return cnt;
-
   }
 
   /**
    * Fill empty cells with a certain color.
    * 
-   * @param color
-   *          Color to fill empty cells with
+   * @param color Color to fill empty cells with
    */
   void fillEmptyWith(final CellValue color) {
     for (int i = 0; i < this.size; i++) {
@@ -90,14 +84,12 @@ class CellGroup {
         this.cells[i].setCellValue(color);
       }
     }
-
   }
 
   /**
    * Use a full cell group to fix this.
    * 
-   * @param cellGroup
-   *          CellGroup to use to fix
+   * @param cellGroup CellGroup to use to fix
    */
   public void fixCellGroup(final CellGroup cellGroup) {
     for (int i = 0; i < this.size; i++) {
@@ -116,8 +108,7 @@ class CellGroup {
   /**
    * Get a cell.
    * 
-   * @param i
-   *          index of Cell to return
+   * @param i index of Cell to return
    * @return the Cell.
    */
   public Cell getCell(final int i) {
@@ -169,44 +160,5 @@ class CellGroup {
   @Override
   public String toString() {
     return "CellGroup [size=" + this.size + ", cells=" + Arrays.toString(this.cells) + "]";
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.lang.Object#hashCode()
-   */
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + Arrays.hashCode(this.cells);
-    return prime * result + this.size;
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    CellGroup other = (CellGroup) obj;
-    if (!Arrays.equals(this.cells, other.cells)) {
-      return false;
-    }
-    if (this.size != other.size) {
-      return false;
-    }
-    return true;
   }
 }

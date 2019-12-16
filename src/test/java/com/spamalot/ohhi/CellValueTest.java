@@ -1,6 +1,9 @@
 package com.spamalot.ohhi;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -9,20 +12,19 @@ public class CellValueTest {
   @Test
   public void testCellValue() {
     CellValue b = CellValue.BLUE;
-    assertFalse(b.equals(CellValue.RED));
+    assertNotEquals(CellValue.RED, b);
   }
 
   @Test
   public void testOpposite() {
     CellValue b = CellValue.BLUE;
-    assertTrue(b.opposite().equals(CellValue.RED));
-    assertFalse(CellValue.RED.opposite().equals(CellValue.RED));
+    assertEquals(CellValue.RED, b.opposite());
+    assertNotEquals(CellValue.RED, CellValue.RED.opposite());
   }
 
   @Test
   public void testToString() {
     CellValue b = CellValue.BLUE;
-    assertTrue(b.toString().equals("B"));
+    assertEquals("B", b.toString());
   }
-
 }

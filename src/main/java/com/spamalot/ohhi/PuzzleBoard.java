@@ -25,8 +25,7 @@ class PuzzleBoard {
   /**
    * Instantiate a Puzzle.
    * 
-   * @param s
-   *          The size of the Puzzle.
+   * @param s The size of the Puzzle.
    */
   PuzzleBoard(final int s) {
     this.size = s;
@@ -52,12 +51,9 @@ class PuzzleBoard {
   /**
    * Set a cell's color.
    * 
-   * @param color
-   *          Color to set
-   * @param row
-   *          Row the cell is in
-   * @param col
-   *          Column the cell is in
+   * @param color Color to set
+   * @param row   Row the cell is in
+   * @param col   Column the cell is in
    */
   final void setCell(final CellValue color, final int row, final int col) {
     this.cells[row][col].setCellValue(color);
@@ -118,6 +114,8 @@ class PuzzleBoard {
   }
 
   /**
+   * The size.
+   * 
    * @return the size
    */
   public int getSize() {
