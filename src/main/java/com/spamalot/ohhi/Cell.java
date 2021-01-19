@@ -43,7 +43,7 @@ class Cell {
     return this.value.toString();
   }
 
-  public boolean hasSameColorAs(Cell cell) {
+  public boolean hasSameColorAs(final Cell cell) {
     return this.value == cell.getCellValue();
   }
 }
