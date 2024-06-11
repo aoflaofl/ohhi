@@ -1,49 +1,26 @@
 package com.spamalot.ohhi;
 
-/**
- * Hold an individual cell.
- * 
- * @author johannsg
- *
- */
 class Cell {
+	private CellValue value = CellValue.EMPTY;
 
-  /** The value in this cell. */
-  private CellValue value = CellValue.EMPTY;
+	public CellValue getValue() {
+		return this.value;
+	}
 
-  /**
-   * Get this cell's value.
-   * 
-   * @return the Cell's value.
-   */
-  public final CellValue getCellValue() {
-    return this.value;
-  }
+	public boolean isEmpty() {
+		return this.value == CellValue.EMPTY;
+	}
 
-  /**
-   * Check if a cell is empty.
-   * 
-   * @return True if this cell has no color
-   */
-  public boolean isEmpty() {
-    return this.value == CellValue.EMPTY;
-  }
+	public void setValue(CellValue value) {
+		this.value = value;
+	}
 
-  /**
-   * Set the cell's color.
-   * 
-   * @param c the color to set the cell to
-   */
-  public final void setCellValue(final CellValue c) {
-    this.value = c;
-  }
+	@Override
+	public String toString() {
+		return this.value.toString();
+	}
 
-  @Override
-  public String toString() {
-    return this.value.toString();
-  }
-
-  public boolean hasSameColorAs(final Cell cell) {
-    return this.value == cell.getCellValue();
-  }
+	public boolean isSameColor(Cell other) {
+		return this.value == other.getValue();
+	}
 }

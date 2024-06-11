@@ -11,8 +11,8 @@ public class CellTest {
   @Test
   public void testGetCellValue() {
     Cell cell = new Cell();
-    cell.setCellValue(CellValue.BLUE);
-    assertEquals(CellValue.BLUE, cell.getCellValue());
+    cell.setValue(CellValue.BLUE);
+    assertEquals(CellValue.BLUE, cell.getValue());
   }
 
   @Test
@@ -20,7 +20,7 @@ public class CellTest {
     Cell cell = new Cell();
     assertTrue(cell.isEmpty());
 
-    cell.setCellValue(CellValue.RED);
+    cell.setValue(CellValue.RED);
     assertFalse(cell.isEmpty());
   }
 
@@ -35,11 +35,11 @@ public class CellTest {
     Cell cell1 = new Cell();
     Cell cell2 = new Cell();
 
-    cell2.setCellValue(CellValue.BLUE);
+    cell2.setValue(CellValue.BLUE);
 
-    assertFalse(cell1.hasSameColorAs(cell2));
+    assertFalse(cell1.isSameColor(cell2));
 
-    cell1.setCellValue(CellValue.BLUE);
-    assertTrue(cell1.hasSameColorAs(cell2));
+    cell1.setValue(CellValue.BLUE);
+    assertTrue(cell1.isSameColor(cell2));
   }
 }
