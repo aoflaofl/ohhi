@@ -13,19 +13,25 @@ class PuzzleSolver {
 
   public static void solve(PuzzleBoard puzzleBoard) {
     processCellGroups(puzzleBoard.getRowCellGroups());
-    processCellGroups(puzzleBoard.getColumnCellGroups());
-
-    while (solveThree(puzzleBoard.getRowCellGroups()) || solveThree(puzzleBoard.getColumnCellGroups())) {
+    // processCellGroups(puzzleBoard.getColumnCellGroups());
+    boolean changeMade = true;
+    while (changeMade) {
+      changeMade = false;
+      if (solveThree(puzzleBoard.getRowCellGroups()) || solveThree(puzzleBoard.getColumnCellGroups())) {
+        changeMade = true;
+      }
+      LOGGER.info("\nThree Cell\n{}", puzzleBoard);
     }
 
     while (evenNumber(puzzleBoard)) {
+      LOGGER.info("\nEven Number\n{}", puzzleBoard);
     }
 
-    while (solveThree(puzzleBoard.getRowCellGroups()) || solveThree(puzzleBoard.getColumnCellGroups())) {
-    }
-
-    evenNumber(puzzleBoard);
-    puzzleBoard.processGroups();
+//    while (solveThree(puzzleBoard.getRowCellGroups()) || solveThree(puzzleBoard.getColumnCellGroups())) {
+//    }
+//
+//    evenNumber(puzzleBoard);
+//    puzzleBoard.processGroups();
   }
 
   private static boolean solveThree(CellGroup[] group) {
@@ -51,20 +57,22 @@ class PuzzleSolver {
   }
 
   private static boolean fixThreeInARow(CellGroup cellGroup, int index) {
-    Cell c1 = cellGroup.getCell(index);
-    Cell c2 = cellGroup.getCell(index + 1);
-    Cell c3 = cellGroup.getCell(index + 2);
+    CellValue c0 = cellGroup.getCellValue(index - 1);
+    CellValue c1 = cellGroup.getCellValue(index);
+    CellValue c2 = cellGroup.getCellValue(index + 1);
+    CellValue c3 = cellGroup.getCellValue(index + 2);
+    CellValue c4 = cellGroup.getCellValue(index + 3);
 
-    if (c1.isEmpty() && c2.isSameColor(c3)) {
-      c1.setValue(c2.getValue().opposite());
+    if (c2 != c0 && c1 == CellValue.EMPTY && c2 == c3 && c3 != c4) {
+      cellGroup.getCell(index).setValue(c2.opposite());
       return true;
     }
-    if (c2.isEmpty() && c1.isSameColor(c3)) {
-      c2.setValue(c1.getValue().opposite());
+    if (c1 != c0 && c2 == CellValue.EMPTY && c1 == c3 && c3 != c4) {
+      cellGroup.getCell(index + 1).setValue(c1.opposite());
       return true;
     }
-    if (c3.isEmpty() && c1.isSameColor(c2)) {
-      c3.setValue(c1.getValue().opposite());
+    if (c1 != c0 && c3 == CellValue.EMPTY && c1 == c2 && c2 != c4) {
+      cellGroup.getCell(index + 2).setValue(c1.opposite());
       return true;
     }
     return false;
@@ -84,8 +92,7 @@ class PuzzleSolver {
     HashMap<CellValue, Integer> m = cg.getCountMap();
     for (CellValue color : m.keySet()) {
       if (m.get(color) == fillSize) {
-        cg.fillEmptyWith(color.opposite());
-        return true;
+        return cg.fillEmptyWith(color.opposite());
       }
     }
     return false;
@@ -93,7 +100,7 @@ class PuzzleSolver {
 
   private static void processCellGroups(CellGroup[] groups) {
     for (CellGroup cg : groups) {
-      System.out.println(cg);
+      LOGGER.info("{}", cg);
     }
   }
 }
