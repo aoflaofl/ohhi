@@ -2,8 +2,7 @@
 package com.spamalot.ohhi;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.stream.Collectors;
+import java.util.EnumMap;
 
 class CellGroup {
   private Cell[] cells;
@@ -68,9 +67,14 @@ class CellGroup {
     return this.cells[i];
   }
 
-  HashMap<CellValue, Integer> getCountMap() {
-    return (HashMap<CellValue, Integer>) Arrays.stream(this.cells).filter(cell -> cell.getValue() != null)
-        .collect(Collectors.toMap(Cell::getValue, cell -> 1, Integer::sum));
+  EnumMap<CellValue, Integer> getCountMap() {
+    EnumMap<CellValue, Integer> countMap = new EnumMap<>(CellValue.class);
+    for (Cell cell : this.cells) {
+      if (cell.getValue() != null && cell.getValue() != CellValue.EMPTY) {
+        countMap.put(cell.getValue(), countMap.getOrDefault(cell.getValue(), 0) + 1);
+      }
+    }
+    return countMap;
   }
 
   int getSize() {
