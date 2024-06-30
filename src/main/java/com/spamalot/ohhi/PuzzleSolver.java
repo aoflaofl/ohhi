@@ -16,6 +16,7 @@ class PuzzleSolver {
     do {
       progress = SolveThree.applyThreeCellRule(puzzleBoard);
       progress = EvenNumber.applyEvenNumberRule(puzzleBoard) || progress;
+      progress = SameRowRule.applySameRowRule(puzzleBoard) || progress;
     } while (progress);
   }
 

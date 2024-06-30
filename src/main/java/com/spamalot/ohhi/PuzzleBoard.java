@@ -16,61 +16,51 @@ class PuzzleBoard {
     initializeBoard();
   }
 
-  void setCell(CellValue color, int row, int col) {
-    this.cells[row][col].setValue(color);
+  private void setCell(CellValue color, int row, int col) {
+    cells[row][col].setValue(color);
   }
 
   @Override
   public String toString() {
-    StringBuilder ret = new StringBuilder();
+    StringBuilder boardRepresentation = new StringBuilder();
     for (Cell[] cellRow : this.cells) {
-      for (Cell cell : cellRow) {
-        ret.append(cell);
-      }
-      ret.append('\n');
+      appendRowToString(cellRow, boardRepresentation);
     }
-    return ret.toString();
+    return boardRepresentation.toString();
   }
 
-  void processGroups() {
-    processCellGroups(this.rows);
-    processCellGroups(this.columns);
+  private void appendRowToString(Cell[] cellRow, StringBuilder boardRepresentation) {
+    for (Cell cell : cellRow) {
+      boardRepresentation.append(cell);
+    }
+    boardRepresentation.append('\n');
   }
 
   private void initializeBoard() {
+    initializeCellGroups();
+    createAndAssignCells();
+  }
+
+  private void initializeCellGroups() {
     for (int i = 0; i < size; i++) {
       this.rows[i] = new CellGroup(size);
       this.columns[i] = new CellGroup(size);
     }
+  }
 
+  private void createAndAssignCells() {
     for (int row = 0; row < size; row++) {
       for (int column = 0; column < size; column++) {
         Cell cell = new Cell();
-        this.cells[row][column] = cell;
-        this.rows[row].addCell(cell, column);
-        this.columns[column].addCell(cell, row);
+        assignCellToBoard(cell, row, column);
       }
     }
   }
 
-  private void processCellGroups(CellGroup[] group) {
-    for (int i = 0; i < this.size; i++) {
-      if (group[i].emptyCount() == 2) {
-        CellGroup cg = findDuplicate(group, group[i]);
-        if (cg != null) {
-          group[i].fixCellGroup(cg);
-        }
-      }
-    }
-  }
-
-  private CellGroup findDuplicate(CellGroup[] groups, CellGroup cellGroup) {
-    for (CellGroup group : groups) {
-      if (group.emptyCount() == 0 && cellGroup.compareExistingCells(group)) {
-        return group;
-      }
-    }
-    return null;
+  private void assignCellToBoard(Cell cell, int row, int column) {
+    this.cells[row][column] = cell;
+    this.rows[row].addCell(cell, column);
+    this.columns[column].addCell(cell, row);
   }
 
   public CellGroup[] getRowCellGroups() {
@@ -83,5 +73,15 @@ class PuzzleBoard {
 
   public int getSize() {
     return this.size;
+  }
+
+  void setInitialCells(CellValue cellValue, int[][] cells) {
+    setCells(cellValue, cells);
+  }
+
+  private void setCells(CellValue cellValue, int[][] cells) {
+    for (int[] cell : cells) {
+      setCell(cellValue, cell[0], cell[1]);
+    }
   }
 }
